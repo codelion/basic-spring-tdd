@@ -1,18 +1,22 @@
 package captcha.controllers;
 
+import captcha.domain.Captcha;
+import captcha.domain.CaptchaFactory;
+import captcha.models.CaptchaForm;
+import captcha.validators.CaptchaValidator;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import captcha.domain.Captcha;
-import captcha.models.CaptchaForm;
 
 @Controller
 @Scope("prototype")
@@ -26,6 +30,14 @@ public class CaptchaController {
 	@Autowired
 	Captcha captcha;
 
+        @Autowired
+        CaptchaValidator captchaValidator;
+        
+        @InitBinder
+        public void initBinder(WebDataBinder binder) {
+          binder.setValidator(captchaValidator);
+        }
+
 	@RequestMapping(value = "/captcha", method = RequestMethod.GET)
 	public String show(Model model) {
 		setupCaptchaForm(new CaptchaForm(), model);
@@ -34,6 +46,10 @@ public class CaptchaController {
 
 	@RequestMapping(value = "/captcha", method = RequestMethod.POST)
 	public String answer(@Valid @ModelAttribute(FORM_OBJECT) CaptchaForm captchaForm, Errors errors, Model model) {
+                if(errors.hasErrors()) {
+                  setupCaptchaForm(new CaptchaForm(), model);
+		  return FORM_PAGE;
+                }
 		return SUCCESS_PAGE;
 	}
 	

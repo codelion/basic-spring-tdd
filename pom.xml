@@ -131,6 +131,10 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
-
+	 <dependency>
+	  <groupId>com.sourceclear</groupId>
+	  <artifactId>bodylines</artifactId>
+	  <version>0.1-SNAPSHOT</version>
+	 </dependency>
 	</dependencies>	
 </project>
