@@ -22,16 +22,9 @@ public class CaptchaConfig {
 	public Captcha captcha() {
 		return factory().random();
 	}
-<<<<<<< HEAD
 	
 	@Bean
 	public CaptchaValidator validator() {
-=======
-        
-        @Bean
-	@Scope("prototype")
-	public CaptchaValidator captchaValidator() {
->>>>>>> demo
 		return new CaptchaValidator(factory());
 	}
 	
