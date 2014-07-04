@@ -45,7 +45,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <filter-class>com.sourceclear.bodylines.ResponseHardening</filter-class>
         <init-param>
             <param-name>hardeningType</param-name>
-            <param-value>encryption</param-value>
+            <param-value>random</param-value>
         </init-param>
     </filter>
     <filter-mapping>

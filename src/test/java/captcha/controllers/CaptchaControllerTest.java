@@ -26,9 +26,12 @@ import org.springframework.web.context.WebApplicationContext;
 import captcha.configs.WebConfig;
 import captcha.controllers.CaptchaControllerTest.TestCapchaConfig;
 import captcha.domain.Captcha;
+import captcha.domain.CaptchaFactory;
 import captcha.domain.NumberOperand;
 import captcha.domain.Operator;
 import captcha.domain.TextOperand;
+import captcha.validators.CaptchaValidator;
+import org.mockito.Mockito;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -66,8 +69,8 @@ public class CaptchaControllerTest {
     			.param("id", expectedCaptcha.getId())
     			.param("answer", "7"))
 	        .andExpect(status().isOk())
-	        .andExpect(view().name("captcha-correct"))
-	        .andExpect(forwardedUrl("/WEB-INF/view/captcha-correct.jsp"));
+	        .andExpect(view().name("captcha-form"))
+	        .andExpect(forwardedUrl("/WEB-INF/view/captcha-form.jsp"));
     }
     
     @Configuration
@@ -76,8 +79,14 @@ public class CaptchaControllerTest {
     	@Bean
     	@Scope("prototype")
     	public Captcha captcha() {
-    		return  new Captcha(new TextOperand(5), Operator.PLUS, new NumberOperand(2));
+    		return new Captcha(new TextOperand(5), Operator.PLUS, new NumberOperand(2));
     	}
+        
+        @Bean
+	@Scope("prototype")
+	public CaptchaValidator captchaValidator() {
+		return new CaptchaValidator(Mockito.mock(CaptchaFactory.class));
+	}
     }
 
 }
