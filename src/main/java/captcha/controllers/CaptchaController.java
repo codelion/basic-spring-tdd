@@ -1,17 +1,14 @@
 package captcha.controllers;
 
 import captcha.domain.Captcha;
-import captcha.domain.CaptchaFactory;
 import captcha.models.CaptchaForm;
 import captcha.validators.CaptchaValidator;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
