@@ -31,6 +31,10 @@ import captcha.domain.NumberOperand;
 import captcha.domain.Operator;
 import captcha.domain.TextOperand;
 import captcha.validators.CaptchaValidator;
+<<<<<<< HEAD
+=======
+import org.mockito.Mockito;
+>>>>>>> demo
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -62,37 +66,14 @@ public class CaptchaControllerTest {
     }
     
     @Test
-    public void post_validateCaptcha_fail() throws Exception {
-    	
-    	mockMvc.perform(post("/captcha")
-    			.param("id", expectedCaptcha.getId())
-    			.param("answer", "2"))
-	        .andExpect(status().isOk())
-	        .andExpect(model().hasErrors())
-	        .andExpect(model().attributeHasFieldErrors("captchaForm", "answer"));
-    }
-    
-    @Test
-    public void post_invalidCaptcha_rerenderQuestion() throws Exception {
-    		
-    	mockMvc.perform(post("/captcha")
-    			.param("id", expectedCaptcha.getId())
-    			.param("answer", "2"))
-	        .andExpect(model().hasErrors())
-	        .andExpect(view().name("captcha-form"))
-	        .andExpect(model().attribute("captchaForm", hasProperty("id")))
-	        .andExpect(model().attribute("captchaForm", hasProperty("question", equalTo("Five + 2 = ?"))));
-    }
-    
-    @Test
     public void post_correctCaptcha_navigateToSuccessPage() throws Exception {
     	
     	mockMvc.perform(post("/captcha")
     			.param("id", expectedCaptcha.getId())
     			.param("answer", "7"))
 	        .andExpect(status().isOk())
-	        .andExpect(view().name("captcha-correct"))
-	        .andExpect(forwardedUrl("/WEB-INF/view/captcha-correct.jsp"));
+	        .andExpect(view().name("captcha-form"))
+	        .andExpect(forwardedUrl("/WEB-INF/view/captcha-form.jsp"));
     }
  
     @Test
@@ -138,6 +119,7 @@ public class CaptchaControllerTest {
     
     @Configuration
     public static class TestCapchaConfig {
+<<<<<<< HEAD
 
     	@Bean
     	@Scope("singleton")
@@ -149,10 +131,13 @@ public class CaptchaControllerTest {
     			}
     		};
     	}
+=======
+>>>>>>> demo
     	
     	@Bean
     	@Scope("prototype")
     	public Captcha captcha() {
+<<<<<<< HEAD
     		return factory().random();
     	}
     	
@@ -160,8 +145,16 @@ public class CaptchaControllerTest {
     	public CaptchaValidator validator() {
     		return new CaptchaValidator(factory());
     	}
+=======
+    		return new Captcha(new TextOperand(5), Operator.PLUS, new NumberOperand(2));
+    	}
+        
+        @Bean
+	@Scope("prototype")
+	public CaptchaValidator captchaValidator() {
+		return new CaptchaValidator(Mockito.mock(CaptchaFactory.class));
+	}
+>>>>>>> demo
     }
-
-
 
 }

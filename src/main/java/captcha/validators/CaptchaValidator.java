@@ -1,6 +1,10 @@
 package captcha.validators;
 
+<<<<<<< HEAD
 import org.springframework.stereotype.Component;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> demo
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -8,7 +12,6 @@ import captcha.domain.Captcha;
 import captcha.domain.CaptchaFactory;
 import captcha.models.CaptchaForm;
 
-@Component
 public class CaptchaValidator implements Validator {
 	
 	CaptchaFactory factory;
